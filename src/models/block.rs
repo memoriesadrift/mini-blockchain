@@ -6,12 +6,12 @@ use super::{syntactic_validation::SyntacticValidation, utils::Hash};
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Block {
-    previd: Option<Hash>,
-    nonce: u64,
-    timestamp: u64,
-    txids: Vec<Hash>,
-    miner: String,
-    note: String,
+    pub previd: Option<Hash>,
+    pub nonce: u64,
+    pub timestamp: u64,
+    pub txids: Vec<Hash>,
+    pub miner: String,
+    pub note: String,
 }
 
 impl Block {

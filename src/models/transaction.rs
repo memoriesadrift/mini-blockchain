@@ -6,29 +6,29 @@ use super::{syntactic_validation::SyntacticValidation, utils::{Hash, U256}};
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Input {
-    txid: Hash,
-    index: u64,
-    sig: Vec<u8>
+    pub txid: Hash,
+    pub index: u64,
+    pub sig: Vec<u8>
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Output {
-    to: PublicKey,
-    value: U256
+    pub to: PublicKey,
+    pub value: U256
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CoinbaseTransaction {
-    outputs: Vec<Output>,
-    height: u64,
-    data: Vec<u8>
+    pub outputs: Vec<Output>,
+    pub height: u64,
+    pub data: Vec<u8>
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SpendingTransaction {
-    inputs: Vec<Input>,
-    outputs: Vec<Output>,
-    data: Vec<u8>
+    pub inputs: Vec<Input>,
+    pub outputs: Vec<Output>,
+    pub data: Vec<u8>
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
