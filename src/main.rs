@@ -3,6 +3,7 @@ use std::io;
 mod models;
 mod config;
 mod miner;
+mod storage;
 
 fn main() {
     println!("Hello, world, enter client name!");

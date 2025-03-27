@@ -1,5 +1,8 @@
 use k256::PublicKey;
 use serde::{Serialize, Deserialize};
+use serde_canonical_json::CanonicalFormatter;
+use serde_json::Serializer;
+use sha2::{digest::FixedOutput, Digest, Sha256};
 use crate::config::COINBASE_REWARD;
 
 use super::{syntactic_validation::SyntacticValidation, utils::{Hash, U256}};
@@ -37,10 +40,23 @@ pub enum Transaction {
     Spending(SpendingTransaction)
 }
 
+impl Transaction {
+    pub fn hash(&self) -> Hash {
+        let mut data: Vec<u8> = Vec::new();
+        let mut ser = Serializer::with_formatter(&mut data, CanonicalFormatter::new());
+        self.serialize(&mut ser).unwrap();
+
+        let mut hasher = Sha256::new();
+        hasher.update(&data);
+
+        hasher.finalize_fixed().to_vec()
+    }
+}
+
 // TODO: Possibly add a limit to data length in validation
 impl SyntacticValidation for CoinbaseTransaction {
     fn is_valid(self: &Self) -> bool {
-        self.outputs.len() == 1 && self.outputs[0].value == U256::from(COINBASE_REWARD)
+        self.outputs.len() == 1 && self.outputs[0].value == COINBASE_REWARD
     }
 }
 
