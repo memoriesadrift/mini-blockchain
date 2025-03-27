@@ -2,14 +2,14 @@ use serde::{Deserialize, Serialize};
 use serde_json::Serializer;
 use serde_canonical_json::CanonicalFormatter;
 use sha2::{digest::FixedOutput, Digest, Sha256};
-use super::{transaction::Transaction, utils::Hash};
+use super::{syntactic_validation::SyntacticValidation, utils::Hash};
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Block {
     previd: Option<Hash>,
     nonce: u64,
     timestamp: u64,
-    txids: Vec<Transaction>,
+    txids: Vec<Hash>,
     miner: String,
     note: String,
 }
@@ -32,9 +32,16 @@ impl Block {
             previd: None,
             nonce: 0,
             timestamp: 1743063884,
-            txids: Vec::new(),
+            // TODO: Add genesis coinbase txid
+            txids: vec![vec![0;32]],
             miner: String::from("Sam"),
             note: String::from("Genesis Block"),
         }
+    }
+}
+
+impl SyntacticValidation for Block {
+    fn is_valid(self: &Self) -> bool {
+        self.txids.len() > 0 && self.miner.len() > 0
     }
 }
