@@ -5,3 +5,5 @@ use ruint::uint;
 pub const BLOCK_DIFFICULTY: usize = 1;
 pub const COIN_DECIMALS: usize = 6;
 pub const COINBASE_REWARD: U256 = uint!(1000000_U256);
+
+pub const MAX_PEERS: usize = 10;
