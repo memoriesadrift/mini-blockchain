@@ -1,17 +1,22 @@
-use std::io;
+use log::info;
 
 mod models;
 mod config;
 mod miner;
 mod storage;
+mod api;
+mod p2p;
 
-fn main() {
-    println!("Hello, world, enter client name!");
-    let mut node_name: String = String::new();
+#[tokio::main]
+async fn main() {
+    env_logger::init();
+    info!("Starting node...");
 
-    io::stdin()
-        .read_line(&mut node_name)
-        .expect("Failed to read line");
+    tokio::spawn(p2p::server::start("127.0.0.1", 8080));
+    tokio::spawn(api::start_api_server(3030));
+    info!("p2p websocket server running...");
 
-    println!("Hello, {}", node_name)
+    loop { 
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await; 
+    }
 }
