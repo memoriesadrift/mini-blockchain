@@ -6,6 +6,7 @@ authors = ["memoriesadrift"]
 
 [dependencies]
 anyhow = "1.0.95"
+dotenv = "0.15.0"
 env_logger = "0.11.7"
 futures-util = "0.3.31"
 hex = "0.4.3"
@@ -19,5 +20,5 @@ sha2 = "0.10.8"
 sled = "0.34.7"
 tokio = {version = "1.44.1", features = ["full"]}
 tokio-tungstenite = "0.26.2"
+tokio-util = {version = "0.7.14", features = ["rt"]}
 warp = "0.3.7"
-
